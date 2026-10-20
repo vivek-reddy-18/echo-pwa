@@ -1,4 +1,4 @@
-const CACHE = 'echo-shell-v2';
+const CACHE = 'echo-shell-v4';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
@@ -30,7 +30,10 @@ self.addEventListener('fetch', event => {
           }
           return response;
         })
-        .catch(async () => (await caches.match(request)) || caches.match(new URL('./index.html', self.registration.scope).href))
+        .catch(async () => {
+          const cachedPage = (await caches.match(request)) || (await caches.match(new URL('./index.html', self.registration.scope).href));
+          return cachedPage || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
+        })
     );
     return;
   }
@@ -43,7 +46,7 @@ self.addEventListener('fetch', event => {
           await cache.put(request, response.clone());
         }
         return response;
-      }).catch(() => cached);
+      }).catch(() => cached || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } }));
       return cached || fresh;
     })
   );
