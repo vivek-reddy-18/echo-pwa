@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#14070c">
+<meta name="theme-color" content="#1e0b13">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Lyra — Frost-Glass Music</title>
@@ -12,8 +12,8 @@
 <link rel="apple-touch-icon" href="./icon-192.png">
 <style>
 :root {
-  --bg: #12070b;
-  --bg-deep: #090306;
+  --bg: #1e0b13;
+  --bg-deep: #1e0b13;
   --glass-bg: rgba(36, 18, 24, 0.55);
   --glass-bg-elevated: rgba(48, 22, 32, 0.72);
   --glass-bg-soft: rgba(36, 18, 24, 0.46);
@@ -104,15 +104,24 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html, body {
+html {
   width: 100%;
   height: 100%;
   margin: 0;
+  background-color: var(--bg-deep);
 }
 
 body {
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  margin: 0;
   overflow: hidden;
-  background: var(--bg-deep);
+  background-color: var(--bg-deep);
+  background-image:
+    radial-gradient(120% 55% at 50% 0%, rgba(224, 68, 122, 0.24) 0%, transparent 72%),
+    radial-gradient(110% 50% at 50% 100%, rgba(168, 46, 98, 0.28) 0%, transparent 74%),
+    linear-gradient(180deg, var(--bg-deep) 0%, #190910 50%, var(--bg-deep) 100%);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -120,7 +129,14 @@ body {
   touch-action: manipulation;
 }
 
-/* Zero-Blur-Cost Multi-Stop Ambient Aurora (Never Invalidates Backdrop-Filter!) */
+:root[data-theme="light"] body {
+  background-image:
+    radial-gradient(120% 55% at 50% 0%, rgba(235, 134, 168, 0.26) 0%, transparent 72%),
+    radial-gradient(110% 50% at 50% 100%, rgba(188, 134, 174, 0.24) 0%, transparent 74%),
+    linear-gradient(180deg, var(--bg-deep) 0%, #f5eaf0 50%, var(--bg-deep) 100%);
+}
+
+/* Zero-Blur-Cost Multi-Stop Ambient Aurora (Edge-to-Edge Soft Glow) */
 body::before,
 body::after {
   content: "";
@@ -132,25 +148,25 @@ body::after {
 }
 
 body::before {
-  top: -22%;
-  left: -24%;
-  width: 110vw;
-  height: 110vw;
+  top: -18%;
+  left: -20%;
+  width: 112vw;
+  height: 112vw;
   max-width: 680px;
   max-height: 680px;
   background: radial-gradient(circle, var(--ambient-1) 0%, var(--rose-glow) 34%, transparent 70%);
-  opacity: 0.68;
+  opacity: 0.48;
 }
 
 body::after {
-  bottom: -24%;
-  right: -24%;
-  width: 116vw;
-  height: 116vw;
+  bottom: -18%;
+  right: -20%;
+  width: 118vw;
+  height: 118vw;
   max-width: 720px;
   max-height: 720px;
   background: radial-gradient(circle, var(--ambient-2) 0%, var(--plum-glow) 36%, transparent 72%);
-  opacity: 0.62;
+  opacity: 0.48;
 }
 
 button, input {
@@ -193,9 +209,9 @@ button:focus-visible, input:focus-visible {
   margin: auto;
   overflow: hidden;
   background:
-    radial-gradient(95% 55% at 50% -10%, var(--accent-glow), transparent 68%),
-    radial-gradient(75% 50% at 88% 20%, var(--rose-glow), transparent 72%),
-    radial-gradient(85% 60% at 12% 82%, var(--plum-glow), transparent 75%);
+    radial-gradient(90% 44% at 50% 6%, var(--accent-glow), transparent 70%),
+    radial-gradient(80% 48% at 88% 26%, var(--rose-glow), transparent 72%),
+    radial-gradient(85% 54% at 14% 78%, var(--plum-glow), transparent 75%);
 }
 
 .shell {
@@ -2588,7 +2604,7 @@ function setSleepTimer(mode){
   toast('Sleep timer set for '+mins+' min');
 }
 
-function applyTheme(){const root=document.documentElement;if(prefs.theme==='system')root.removeAttribute('data-theme');else root.dataset.theme=prefs.theme;const dark=prefs.theme==='dark'||(prefs.theme==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.querySelector('meta[name="theme-color"]').content=dark?'#14070c':'#f7eef2'}
+function applyTheme(){const root=document.documentElement;if(prefs.theme==='system')root.removeAttribute('data-theme');else root.dataset.theme=prefs.theme;const dark=prefs.theme==='dark'||(prefs.theme==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.querySelector('meta[name="theme-color"]').content=dark?'#1e0b13':'#ede0e6'}
 function source(){if(currentPlaylistId!==null){const p=playlists.find(x=>x.id===currentPlaylistId);return p?(p.songIds||[]).map(id=>songs.find(x=>x.id===id)).filter(Boolean):[]}if(libraryMode==='favorites')return songs.filter(x=>x.favorite);if(libraryMode==='recent')return songs.filter(x=>x.lastPlayedAt);return songs.slice()}
 function sorted(list){return list.slice().sort((a,b)=>{if(prefs.sort==='title')return a.title.localeCompare(b.title,undefined,{sensitivity:'base'});if(prefs.sort==='played')return(b.lastPlayedAt||0)-(a.lastPlayedAt||0);return(b.addedAt||0)-(a.addedAt||0)})}
 function qsource(){return sorted(source())}
@@ -2720,6 +2736,7 @@ function openNow(e){
   if(!curSong)return;
   playerFocus=e&&e.currentTarget||document.activeElement;
   stopViz();
+  document.querySelector('meta[name="theme-color"]').content='#210c15';
   requestAnimationFrame(()=>{
     overlay($('now'),null,true);
     vizTimer=setTimeout(()=>drawViz(audio.paused),380);
@@ -2728,6 +2745,7 @@ function openNow(e){
 function closeNow(focus=true){
   stopViz();
   overlay($('now'),null,false);
+  applyTheme();
   if(focus&&playerFocus&&document.contains(playerFocus))safeFocus(playerFocus);
 }
 function sheetHead(title,text){return'<div class="sheetHead"><h2 id="sheetTitle">'+esc(title)+'</h2>'+(text?'<p>'+esc(text)+'</p>':'')+'</div>'}
