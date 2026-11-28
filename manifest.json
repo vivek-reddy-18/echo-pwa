@@ -1,7 +1,7 @@
 {
   "name": "Lyra",
   "short_name": "Lyra",
-  "description": "A frost-glass iPhone-style offline music player with 5-band EQ, live visualizer, sleep timer, playlists, and queue controls.",
+  "description": "A frost-glass iPhone-style offline music player with 5-band EQ, live visualizer, sleep timer, playlists, and listening statistics.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -13,13 +13,25 @@
       "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

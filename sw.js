@@ -1,4 +1,4 @@
-const CACHE = 'lyra-shell-v8';
+const CACHE = 'lyra-shell-v9';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
@@ -47,7 +47,11 @@ self.addEventListener('fetch', event => {
         }
         return response;
       }).catch(() => cached || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } }));
-      return cached || fresh;
+      if (cached) {
+        event.waitUntil(fresh);
+        return cached;
+      }
+      return fresh;
     })
   );
 });
