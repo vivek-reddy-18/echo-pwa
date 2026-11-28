@@ -2874,38 +2874,112 @@ button:focus-visible, input:focus-visible {
   flex: none;
 }
 
-/* Unlockable Replay Milestones */
-.spBadges {
+/* Sound Profile & Top Artists (Pure Music-First Cards) */
+.spSoundGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
+  margin-bottom: 12px;
 }
 
-.spBadge {
-  padding: 11px 12px;
+.spSoundPill {
+  padding: 10px 8px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.spSoundPill span {
+  display: block;
+  color: var(--quiet);
+  font-size: 9.5px;
+  font-weight: 750;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+}
+
+.spSoundPill strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 750;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spEqMini {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 48px;
+  padding: 8px 14px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.045);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  opacity: 0.48;
+  width: 100%;
+  transition: background 0.16s ease, transform 0.16s var(--ease-spring);
 }
 
-.spBadge.unlocked {
-  opacity: 1;
-  background: linear-gradient(135deg, rgba(246, 181, 110, 0.15), rgba(224, 68, 122, 0.1));
-  border-color: rgba(246, 181, 110, 0.38);
+.spEqMini:active {
+  transform: scale(0.98);
 }
 
-.spBadge strong {
+.spEqCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.spEqCol i {
   display: block;
-  font-size: 12.5px;
+  width: 100%;
+  max-width: 18px;
+  min-height: 4px;
+  border-radius: 99px;
+  background: linear-gradient(to top, var(--sp-bar2), var(--sp-bar1));
+}
+
+.spEqCol b {
+  font-size: 9px;
   font-weight: 700;
+  color: var(--quiet);
 }
 
-.spBadge span {
-  display: block;
-  margin-top: 3px;
-  color: var(--muted);
+.spArtistChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.spArtistChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 650;
+  transition: transform 0.16s var(--ease-spring), background 0.16s;
+}
+
+.spArtistChip:active {
+  transform: scale(0.95);
+}
+
+.spArtistChip small {
+  color: var(--sp-bar1);
   font-size: 11px;
+  font-weight: 750;
 }
 
 /* Aura Swatches in Customize Sheet */
@@ -2960,11 +3034,7 @@ button:focus-visible, input:focus-visible {
   font-size: 13px;
 }
 
-.spFoot {
-  display: flex;
-  justify-content: center;
-  padding: 4px 0 10px;
-}
+
 
 /* Frosted Toast */
 .toast {
@@ -3070,10 +3140,10 @@ button:focus-visible, input:focus-visible {
     </main>
   </div>
   <div class="selection" id="selection" aria-label="Selected tracks"><button class="iconBtn" id="selectCancel" type="button" aria-label="Cancel selection"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m7 7 10 10M17 7 7 17"/></svg></button><span id="selectCount">0 tracks selected</span><button class="primary" id="selectAddBtn" type="button">Add to playlist</button></div>
-  <section class="statsPage" id="statsPage" role="dialog" aria-modal="true" aria-label="Your Replay Statistics" aria-hidden="true" inert>
+  <section class="statsPage" id="statsPage" role="dialog" aria-modal="true" aria-label="Listening Statistics" aria-hidden="true" inert>
     <header class="statsTop">
       <button class="iconBtn" id="statsBackBtn" type="button" aria-label="Back to library"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6"/></svg></button>
-      <div class="statsTopTitle"><span>Personal Replay</span><strong id="statsPageHeading">Your Replay</strong></div>
+      <div class="statsTopTitle"><span>Music Profile</span><strong id="statsPageHeading">Listening Statistics</strong></div>
       <button class="iconBtn" id="statsCustomBtn" type="button" aria-label="Personalize stats page"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3zM19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg></button>
     </header>
     <div class="statsScroll" id="statsScroll"></div>
@@ -3125,7 +3195,7 @@ const ICON={play:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l
 const EQ_FREQS=[60,230,910,3600,14000],EQ_LABELS=['60Hz','230Hz','910Hz','3.6k','14k'];
 const EQ_PRESETS={Flat:[0,0,0,0,0],'Deep Bass':[6,4,0,1,2],'Vocal':[-1,1,4,3,1],'Late Night':[2,1,-1,-2,-3],'Studio Air':[2,0,1,3,5]};
 const SPEEDS=[0.75,1,1.25,1.5];
-const $=id=>document.getElementById(id),audio=$('audio'),PREFS='echo.preferences.v3',defaults={theme:'dark',sort:'added',shuffle:false,repeat:'off',session:null,eqPreset:'Flat',eqBands:[0,0,0,0,0],volume:1,speed:1,stats:{totalSeconds:0,buckets:{morning:0,afternoon:0,evening:0,night:0},days:[],dailyLog:{},sleepCount:0},profile:{name:'',aura:'rose',goalMin:30,widgets:{rhythm:true,top:true,dna:true,badges:true,gems:true}}};
+const $=id=>document.getElementById(id),audio=$('audio'),PREFS='echo.preferences.v3',defaults={theme:'dark',sort:'added',shuffle:false,repeat:'off',session:null,eqPreset:'Flat',eqBands:[0,0,0,0,0],volume:1,speed:1,stats:{totalSeconds:0,buckets:{morning:0,afternoon:0,evening:0,night:0},days:[],dailyLog:{},sleepCount:0},profile:{name:'',aura:'rose',goalMin:30,widgets:{rhythm:true,top:true,dna:true,sound:true,gems:true}}};
 let db,songs=[],playlists=[],filtered=[],queue=[],curIdx=-1,curSong=null,curUrl=null,libraryMode='all',currentPlaylistId=null,selecting=false,selected=new Set(),sheetState=null,toastTimer,token=0,resumeAt=0,markPlay=false,lastSaved=0,drawerFocus,sheetFocus,playerFocus,prefs=readPrefs(),shuffleOn=!!prefs.shuffle,repeatMode=['off','all','one'].includes(prefs.repeat)?prefs.repeat:'off';
 let actx=null,analyser=null,fadeGain=null,eqFilters=[],vizData=null,vizRaf=null,vizTimer=null,vizGrad=null,vizW=0,sleepEndAt=0,sleepMode='off',sleepInterval=null,savedVolume=1,fadeToken=0,fadeTimer=null,suppressMiniClick=false,playStartAt=0,statsRange='all',statsFocus=null;
 
@@ -3144,12 +3214,13 @@ function initials(t){const p=String(t||'Lyra').trim().split(/\s+/).filter(Boolea
 function cleanName(raw){let s=String(raw||'');s=s.replace(/[\(\[][^\(\)\[\]]*\.[a-z]{2,4}[^\(\)\[\]]*[\)\]]/gi,' ');s=s.replace(/\b(?:www\.)?[a-z0-9][a-z0-9-]*\.(?:com|net|org|info|in|co|me|cc|pk|nl|ru|xyz|link|site|fm|to|tv)\b\.?/gi,' ');s=s.replace(/^[\s\-_|]*#?\d{1,3}\s*[\.\)\-]\s*/,'');s=s.replace(/\s{2,}/g,' ');s=s.replace(/^[\s\-_|]+|[\s\-_|]+$/g,'');return s}
 function meta(name){const b=cleanName(String(name||'').replace(/\.[^.]+$/,'')),p=b.split(' - ');return p.length>1?{artist:p[0].trim()||'Unknown artist',title:p.slice(1).join(' - ').trim()||b}:{artist:'Unknown artist',title:b||'Untitled track'}}
 function shuffled(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
-function openDB(){return new Promise((ok,no)=>{const r=indexedDB.open('echoMusicDB',2);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('songs'))d.createObjectStore('songs',{keyPath:'id',autoIncrement:true});if(!d.objectStoreNames.contains('playlists'))d.createObjectStore('playlists',{keyPath:'id',autoIncrement:true})};r.onsuccess=e=>{db=e.target.result;ok()};r.onerror=e=>no(e.target.error)})}
-function all(store){return new Promise((ok,no)=>{const r=db.transaction(store,'readonly').objectStore(store).getAll();r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
-function add(store,data){return new Promise((ok,no)=>{const r=db.transaction(store,'readwrite').objectStore(store).add(data);r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)})}
-function put(store,data){return new Promise((ok,no)=>{const t=db.transaction(store,'readwrite');t.objectStore(store).put(data);t.oncomplete=ok;t.onerror=()=>no(t.error)})}
-function removePlaylist(id){return new Promise((ok,no)=>{const t=db.transaction('playlists','readwrite');t.objectStore('playlists').delete(id);t.oncomplete=ok;t.onerror=()=>no(t.error)})}
-function removeSong(id){return new Promise((ok,no)=>{const t=db.transaction(['songs','playlists'],'readwrite');t.objectStore('songs').delete(id);const p=t.objectStore('playlists').getAll();p.onsuccess=()=>p.result.forEach(x=>{if((x.songIds||[]).includes(id)){x.songIds=x.songIds.filter(v=>v!==id);t.objectStore('playlists').put(x)}});t.oncomplete=ok;t.onerror=()=>no(t.error)})}
+let memId=1;
+function openDB(){return new Promise(ok=>{try{if(!('indexedDB'in window)){db=null;ok();return}const r=indexedDB.open('echoMusicDB',2);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('songs'))d.createObjectStore('songs',{keyPath:'id',autoIncrement:true});if(!d.objectStoreNames.contains('playlists'))d.createObjectStore('playlists',{keyPath:'id',autoIncrement:true})};r.onsuccess=e=>{db=e.target.result;ok()};r.onerror=()=>{db=null;ok()}}catch(e){db=null;ok()}})}
+function all(store){if(!db)return Promise.resolve([]);return new Promise((ok,no)=>{try{const r=db.transaction(store,'readonly').objectStore(store).getAll();r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){ok([])}})}
+function add(store,data){if(!db)return Promise.resolve(memId++);return new Promise((ok,no)=>{try{const r=db.transaction(store,'readwrite').objectStore(store).add(data);r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)}catch(e){ok(memId++)}})}
+function put(store,data){if(!db)return Promise.resolve();return new Promise((ok,no)=>{try{const t=db.transaction(store,'readwrite');t.objectStore(store).put(data);t.oncomplete=ok;t.onerror=()=>no(t.error)}catch(e){ok()}})}
+function removePlaylist(id){if(!db)return Promise.resolve();return new Promise((ok,no)=>{try{const t=db.transaction('playlists','readwrite');t.objectStore('playlists').delete(id);t.oncomplete=ok;t.onerror=()=>no(t.error)}catch(e){ok()}})}
+function removeSong(id){if(!db)return Promise.resolve();return new Promise((ok,no)=>{try{const t=db.transaction(['songs','playlists'],'readwrite');t.objectStore('songs').delete(id);const p=t.objectStore('playlists').getAll();p.onsuccess=()=>p.result.forEach(x=>{if((x.songIds||[]).includes(id)){x.songIds=x.songIds.filter(v=>v!==id);t.objectStore('playlists').put(x)}});t.oncomplete=ok;t.onerror=()=>no(t.error)}catch(e){ok()}})}
 function safeFocus(el){if(el&&typeof el.focus==='function'){try{el.focus({preventScroll:true})}catch(e){el.focus()}}}
 function setRangeFill(el){if(!el)return;const min=Number(el.min)||0,max=Number(el.max)||100,val=Number(el.value)||0;el.style.setProperty('--fill',((val-min)/(max-min||1)*100)+'%')}
 
@@ -3164,7 +3235,7 @@ function ensureStats(){
   return prefs.stats;
 }
 function ensureProfile(){
-  if(!prefs.profile||typeof prefs.profile!=='object')prefs.profile={name:'',aura:'rose',goalMin:30,widgets:{rhythm:true,top:true,dna:true,badges:true,gems:true}};
+  if(!prefs.profile||typeof prefs.profile!=='object')prefs.profile={name:'',aura:'rose',goalMin:30,widgets:{rhythm:true,top:true,dna:true,sound:true,gems:true}};
   if(!prefs.profile.widgets)prefs.profile.widgets={rhythm:true,top:true,dna:true,badges:true,gems:true};
   if(!prefs.profile.aura)prefs.profile.aura='rose';
   if(!Number.isFinite(prefs.profile.goalMin))prefs.profile.goalMin=30;
@@ -3227,23 +3298,6 @@ function playForgottenGem(){
   smoothSwitch(()=>{queue=unplayed;curIdx=queue.findIndex(x=>x.id===pick.id);load(pick,true,0)});
   toast('Rediscovering “'+pick.title+'”');
 }
-function confirmResetStats(from){
-  openSheet('confirm',{
-    title:'Reset listening stats?',
-    text:'Your total listen time, streak, and track play counts will be cleared. Your songs and playlists will stay safe.',
-    button:'Reset stats',
-    go:async()=>{
-      playStartAt=audio.paused?0:Date.now();
-      prefs.stats={totalSeconds:0,buckets:{morning:0,afternoon:0,evening:0,night:0},days:[],sleepCount:0};
-      savePrefs();
-      for(const x of songs){if(x.playCount||x.listenSeconds){x.playCount=0;x.listenSeconds=0;await put('songs',x).catch(()=>{})}}
-      renderAll();
-      if($('statsPage').classList.contains('open'))renderStatsPage();
-      toast('Listening stats reset');
-    }
-  },from);
-}
-
 /* Web Audio 5-Band EQ, Soft Fade Gain Stage & 60fps Spectrum Engine */
 function ensureAudioGraph(){
   if(actx)return;
@@ -3402,13 +3456,13 @@ function setSleepTimer(mode){
       clearInterval(sleepInterval);sleepInterval=null;sleepMode='off';
       audio.pause();audio.volume=prefs.volume||1;
       $('nowSleepBtn').classList.remove('active');$('sleepSummary').textContent='Sleep';
-      const st=ensureStats();st.sleepCount=(st.sleepCount||0)+1;savePrefs();toast('Sleep timer finished');
+      const st=ensureStats();st.sleepCount=(st.sleepCount||0)+1;savePrefs();
+      toast('Sleep timer finished');
     }
   };
   tick();sleepInterval=setInterval(tick,500);
   toast('Sleep timer set for '+mins+' min');
 }
-
 function applyTheme(){const root=document.documentElement;if(prefs.theme==='system')root.removeAttribute('data-theme');else root.dataset.theme=prefs.theme;const dark=prefs.theme==='dark'||(prefs.theme==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.querySelector('meta[name="theme-color"]').content=dark?'#1e0b13':'#ede0e6'}
 function source(){if(currentPlaylistId!==null){const p=playlists.find(x=>x.id===currentPlaylistId);return p?(p.songIds||[]).map(id=>songs.find(x=>x.id===id)).filter(Boolean):[]}if(libraryMode==='favorites')return songs.filter(x=>x.favorite);if(libraryMode==='recent')return songs.filter(x=>x.lastPlayedAt);return songs.slice()}
 function sorted(list){return list.slice().sort((a,b)=>{if(prefs.sort==='title')return a.title.localeCompare(b.title,undefined,{sensitivity:'base'});if(prefs.sort==='played')return(b.lastPlayedAt||0)-(a.lastPlayedAt||0);return(b.addedAt||0)-(a.addedAt||0)})}
@@ -3504,7 +3558,7 @@ $('songList').addEventListener('click',e=>{
 });
 
 function drawMode(mode,name,icon,count){const on=currentPlaylistId===null&&libraryMode===mode;return'<button class="drawItem '+(on?'active':'')+'" type="button" data-draw-mode="'+mode+'"><span class="left">'+icon+'<span class="name">'+name+'</span></span><span class="drawCount">'+count+'</span></button>'}
-function renderDrawer(){const rows=playlists.map(p=>'<div class="playlistRow"><button class="drawItem '+(currentPlaylistId===p.id?'active':'')+'" type="button" data-playlist="'+p.id+'"><span class="left">'+ICON.list+'<span class="name">'+esc(p.name)+'</span></span><span class="drawCount">'+(p.songIds||[]).length+'</span></button><button class="playlistDel" type="button" data-del-playlist="'+p.id+'" aria-label="Delete playlist">'+ICON.remove+'</button></div>').join(''),size=songs.reduce((a,x)=>a+(x.size||0),0),t={system:'System',dark:'Dark',light:'Light'}[prefs.theme]||'Dark';$('drawer').innerHTML='<div class="drawerHead"><h2>Lyra Library</h2><button class="iconBtn" id="drawerClose" type="button" aria-label="Close library menu">'+ICON.remove+'</button></div><div class="drawGroup"><span class="drawCaption">Collections</span>'+drawMode('all','All songs',ICON.library,songs.length)+drawMode('favorites','Favorites',ICON.heart,songs.filter(x=>x.favorite).length)+drawMode('recent','Recently played',ICON.clock,songs.filter(x=>x.lastPlayedAt).length)+'<button class="drawItem" id="drawerStatsBtn" type="button"><span class="left">'+ICON.stats+'<span class="name">Your Replay</span></span><span class="drawCount">'+fmtListen(ensureStats().totalSeconds)+'</span></button></div><div class="drawGroup"><span class="drawCaption">Playlists</span>'+rows+'<button class="newPlaylist" id="newPlaylist" type="button">'+ICON.add+' New playlist</button></div><div class="drawerFill"></div><div class="drawerFoot"><button id="drawerEqBtn" type="button"><span>Equalizer</span><span>'+esc(prefs.eqPreset||'Flat')+'</span></button><button id="themeButton" type="button"><span>Appearance</span><span>'+t+'</span></button><p class="storage">'+plural(songs.length,'song')+' · '+bytes(size)+' stored on this device</p></div>';$('drawerClose').addEventListener('click',closeDrawer);$('drawer').querySelectorAll('[data-draw-mode]').forEach(b=>b.addEventListener('click',()=>pickMode(b.dataset.drawMode)));$('drawer').querySelectorAll('[data-playlist]').forEach(b=>b.addEventListener('click',()=>pickPlaylist(Number(b.dataset.playlist))));$('drawer').querySelectorAll('[data-del-playlist]').forEach(b=>b.addEventListener('click',()=>confirmPlaylist(Number(b.dataset.delPlaylist),b)));$('newPlaylist').addEventListener('click',()=>openSheet('newplaylist',{ids:[]},$('newPlaylist')));$('drawerStatsBtn').addEventListener('click',()=>{haptic(8);openStatsPage($('drawerStatsBtn'))});$('drawerEqBtn').addEventListener('click',()=>openSheet('eq',{},$('drawerEqBtn')));$('themeButton').addEventListener('click',()=>openSheet('theme',{},$('themeButton')))}
+function renderDrawer(){const rows=playlists.map(p=>'<div class="playlistRow"><button class="drawItem '+(currentPlaylistId===p.id?'active':'')+'" type="button" data-playlist="'+p.id+'"><span class="left">'+ICON.list+'<span class="name">'+esc(p.name)+'</span></span><span class="drawCount">'+(p.songIds||[]).length+'</span></button><button class="playlistDel" type="button" data-del-playlist="'+p.id+'" aria-label="Delete playlist">'+ICON.remove+'</button></div>').join(''),size=songs.reduce((a,x)=>a+(x.size||0),0),t={system:'System',dark:'Dark',light:'Light'}[prefs.theme]||'Dark';$('drawer').innerHTML='<div class="drawerHead"><h2>Lyra Library</h2><button class="iconBtn" id="drawerClose" type="button" aria-label="Close library menu">'+ICON.remove+'</button></div><div class="drawGroup"><span class="drawCaption">Collections</span>'+drawMode('all','All songs',ICON.library,songs.length)+drawMode('favorites','Favorites',ICON.heart,songs.filter(x=>x.favorite).length)+drawMode('recent','Recently played',ICON.clock,songs.filter(x=>x.lastPlayedAt).length)+'<button class="drawItem" id="drawerStatsBtn" type="button"><span class="left">'+ICON.stats+'<span class="name">Listening Statistics</span></span><span class="drawCount">'+fmtListen(ensureStats().totalSeconds)+'</span></button></div><div class="drawGroup"><span class="drawCaption">Playlists</span>'+rows+'<button class="newPlaylist" id="newPlaylist" type="button">'+ICON.add+' New playlist</button></div><div class="drawerFill"></div><div class="drawerFoot"><button id="drawerEqBtn" type="button"><span>Equalizer</span><span>'+esc(prefs.eqPreset||'Flat')+'</span></button><button id="themeButton" type="button"><span>Appearance</span><span>'+t+'</span></button><p class="storage">'+plural(songs.length,'song')+' · '+bytes(size)+' stored on this device</p></div>';$('drawerClose').addEventListener('click',closeDrawer);$('drawer').querySelectorAll('[data-draw-mode]').forEach(b=>b.addEventListener('click',()=>pickMode(b.dataset.drawMode)));$('drawer').querySelectorAll('[data-playlist]').forEach(b=>b.addEventListener('click',()=>pickPlaylist(Number(b.dataset.playlist))));$('drawer').querySelectorAll('[data-del-playlist]').forEach(b=>b.addEventListener('click',()=>confirmPlaylist(Number(b.dataset.delPlaylist),b)));$('newPlaylist').addEventListener('click',()=>openSheet('newplaylist',{ids:[]},$('newPlaylist')));$('drawerStatsBtn').addEventListener('click',()=>{haptic(8);openStatsPage($('drawerStatsBtn'))});$('drawerEqBtn').addEventListener('click',()=>openSheet('eq',{},$('drawerEqBtn')));$('themeButton').addEventListener('click',()=>openSheet('theme',{},$('themeButton')))}
 
 function renderPlayer(){
   if(!curSong){$('mini').classList.remove('show');$('nowTitle').textContent='Nothing playing';$('nowArtist').textContent='';$('miniArtist').textContent='';return}
@@ -3562,7 +3616,7 @@ function closeStatsPage(focus=true){
 function renderStatsPage(){
   const st=ensureStats(),prof=ensureProfile(),w=prof.widgets,page=$('statsPage');
   page.dataset.aura=prof.aura||'rose';
-  const heading=prof.name?prof.name.trim()+'’s Replay':'Your Replay';
+  const heading=prof.name?prof.name.trim()+'’s Statistics':'Listening Statistics';
   $('statsPageHeading').textContent=heading;
 
   const tk=todayKey(),log=st.dailyLog||{};
@@ -3616,35 +3670,40 @@ function renderStatsPage(){
   const anthemHtml=top?'<button class="spAnthem" id="spPlayAnthem" type="button"><span class="spAnthemNum">#1</span>'+art(top,'')+'<div class="spAnthemInfo"><em>Your #1 Anthem</em><strong>'+esc(top.title)+'</strong><span>'+plural(top.playCount||1,'play')+(top.listenSeconds?' · '+fmtListen(top.listenSeconds):'')+'</span></div><span class="spPlayPill">Play</span></button>':'';
 
   const maxSc=top?Math.max(1,(top.playCount||0)*10+(top.listenSeconds||0)):1;
-  const topHtml=w.top?'<section class="spCard"><div class="spCardHead"><h3>Top Tracks</h3><span>'+(top10.length?top10.length+' ranked':'No plays yet')+'</span></div>'+(top10.length?'<div class="spRankList">'+top10.map((x,i)=>{const sc=(x.playCount||0)*10+(x.listenSeconds||0),pct=Math.max(14,Math.round(sc/maxSc*100));return'<button class="spRankRow" type="button" data-sp-play="'+x.id+'"><span class="spRankIdx">'+(i+1)+'</span>'+art(x,'')+'<div class="spRankBody"><div class="spRankTop"><strong>'+esc(x.title)+'</strong><span>'+plural(x.playCount||1,'play')+'</span></div><div class="spRankBar"><i style="width:'+pct+'%"></i></div></div></button>'}).join('')+'</div><button class="primary wide" id="spTopMixBtn" type="button">Play Top '+Math.min(5,top10.length)+' Mix</button>':'<p class="hint">Play a few songs and your Replay leaderboard will build automatically.</p>')+'</section>':'';
+  const topHtml=w.top?'<section class="spCard"><div class="spCardHead"><h3>Top Tracks</h3><span>'+(top10.length?top10.length+' ranked':'No plays yet')+'</span></div>'+(top10.length?'<div class="spRankList">'+top10.map((x,i)=>{const sc=(x.playCount||0)*10+(x.listenSeconds||0),pct=Math.max(14,Math.round(sc/maxSc*100));return'<button class="spRankRow" type="button" data-sp-play="'+x.id+'"><span class="spRankIdx">'+(i+1)+'</span>'+art(x,'')+'<div class="spRankBody"><div class="spRankTop"><strong>'+esc(x.title)+'</strong><span>'+plural(x.playCount||1,'play')+'</span></div><div class="spRankBar"><i style="width:'+pct+'%"></i></div></div></button>'}).join('')+'</div><button class="primary wide" id="spTopMixBtn" type="button">Play Top '+Math.min(5,top10.length)+' Mix</button>':'<p class="hint">Play a few songs and your top tracks will build automatically.</p>')+'</section>':'';
 
   const pM=Math.round((b.morning||0)/bTotal*100),pA=Math.round((b.afternoon||0)/bTotal*100),pE=Math.round((b.evening||0)/bTotal*100),pN=Math.max(0,100-pM-pA-pE);
   const dnaHtml=w.dna?'<section class="spCard"><div class="spCardHead"><h3>Listening DNA</h3><span>Peak: '+vibe+'</span></div><div class="spDnaBar"><i style="width:'+Math.max(4,pM)+'%;background:#ffd17a"></i><i style="width:'+Math.max(4,pA)+'%;background:#f69d62"></i><i style="width:'+Math.max(4,pE)+'%;background:#ff6e9c"></i><i style="width:'+Math.max(4,pN)+'%;background:#9e6bff"></i></div><div class="spDnaLegend"><div class="spDnaItem"><span><i class="spDot" style="background:#ffd17a"></i>Morning</span><strong>'+pM+'%</strong></div><div class="spDnaItem"><span><i class="spDot" style="background:#f69d62"></i>Afternoon</span><strong>'+pA+'%</strong></div><div class="spDnaItem"><span><i class="spDot" style="background:#ff6e9c"></i>Evening</span><strong>'+pE+'%</strong></div><div class="spDnaItem"><span><i class="spDot" style="background:#9e6bff"></i>Late Night</span><strong>'+pN+'%</strong></div></div></section>':'';
 
-  const badges=[
-    {t:'First Spin',d:'Play your first track',on:totalPlays>=1},
-    {t:'3-Day Streak',d:'Listen 3 days in a row',on:streak>=3},
-    {t:'1 Hour Club',d:'Hit 60 mins listened',on:(st.totalSeconds||0)>=3600},
-    {t:'Curator',d:'Favorite 5+ tracks',on:favCount>=5},
-    {t:'Sound Sculptor',d:'Use a custom EQ preset',on:(prefs.eqPreset||'Flat')!=='Flat'},
-    {t:'Night Owl',d:'Listen late at night',on:(b.night||0)>=60}
-  ];
-  const unlockedN=badges.filter(x=>x.on).length;
-  const badgesHtml=w.badges?'<section class="spCard"><div class="spCardHead"><h3>Milestones</h3><span>'+unlockedN+' / '+badges.length+' unlocked</span></div><div class="spBadges">'+badges.map(x=>'<div class="spBadge'+(x.on?' unlocked':'')+'"><strong>'+x.t+'</strong><span>'+x.d+'</span></div>').join('')+'</div></section>':'';
+  const bands=prefs.eqBands||[0,0,0,0,0];
+  const avgLen=songs.length?songs.reduce((a,x)=>a+(x.duration||0),0)/songs.length:0;
+  const totalSize=songs.reduce((a,x)=>a+(x.size||0),0);
+  const artistMap={};
+  songs.forEach(x=>{const a=displayArtist(x.artist);if(!a)return;const sc=(x.playCount||0);if(sc>0)artistMap[a]=(artistMap[a]||0)+sc});
+  const topArtists=Object.entries(artistMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const artistsHtml=topArtists.length?'<section class="spCard"><div class="spCardHead"><h3>Top Artists</h3><span>Tap to play</span></div><div class="spArtistChips">'+topArtists.map(x=>'<button class="spArtistChip" type="button" data-sp-artist="'+esc(x[0])+'">'+esc(x[0])+' <small>'+x[1]+'</small></button>').join('')+'</div></section>':'';
+
+  const soundHtml=w.sound!==false?'<section class="spCard"><div class="spCardHead"><h3>Sound Signature</h3><span>Tap curve to tune EQ</span></div><div class="spSoundGrid"><div class="spSoundPill"><span>EQ Preset</span><strong>'+esc(prefs.eqPreset||'Flat')+'</strong></div><div class="spSoundPill"><span>Speed</span><strong>'+(Number.isInteger(Number(prefs.speed||1))?Number(prefs.speed||1).toFixed(1):String(prefs.speed||1))+'×</strong></div><div class="spSoundPill"><span>Library</span><strong>'+bytes(totalSize)+'</strong></div></div><button class="spEqMini" id="spOpenEqBtn" type="button" aria-label="Open equalizer">'+EQ_LABELS.map((lbl,i)=>{const v=Number(bands[i])||0,pct=Math.max(14,Math.min(100,Math.round((v+12)/24*100)));return'<span class="spEqCol"><i style="height:'+pct+'%"></i><b>'+lbl+'</b></span>'}).join('')+'</button></section>':'';
 
   const gemsHtml=(w.gems&&unplayedCount&&songs.length>1)?'<div class="spGem"><span>'+plural(unplayedCount,'unplayed track')+' waiting in your library</span><button class="textBtn" id="spGemBtn" type="button">Rediscover</button></div>':'';
 
-  const footHtml='<div class="spFoot"><button class="textBtn danger" id="spResetBtn" type="button">Reset Replay Stats</button></div>';
-
   const out=$('statsScroll');
-  out.innerHTML=rangesHtml+heroHtml+kpiHtml+anthemHtml+rhythmHtml+topHtml+dnaHtml+badgesHtml+gemsHtml+footHtml;
+  out.innerHTML=rangesHtml+heroHtml+kpiHtml+anthemHtml+rhythmHtml+topHtml+artistsHtml+dnaHtml+soundHtml+gemsHtml;
 
   out.querySelectorAll('[data-sp-range]').forEach(btn=>btn.addEventListener('click',()=>{haptic(8);statsRange=btn.dataset.spRange;renderStatsPage()}));
   if($('spPlayAnthem'))$('spPlayAnthem').addEventListener('click',()=>{haptic(10);playSong(top.id)});
   out.querySelectorAll('[data-sp-play]').forEach(btn=>btn.addEventListener('click',()=>{haptic(8);playSong(Number(btn.dataset.spPlay))}));
   if($('spTopMixBtn'))$('spTopMixBtn').addEventListener('click',playTopMix);
   if($('spGemBtn'))$('spGemBtn').addEventListener('click',playForgottenGem);
-  $('spResetBtn').addEventListener('click',()=>confirmResetStats($('spResetBtn')));
+  if($('spOpenEqBtn'))$('spOpenEqBtn').addEventListener('click',()=>{haptic(8);openSheet('eq',{},$('spOpenEqBtn'))});
+  out.querySelectorAll('[data-sp-artist]').forEach(btn=>btn.addEventListener('click',()=>{
+    const aName=btn.dataset.spArtist;
+    const list=songs.filter(x=>displayArtist(x.artist)===aName);
+    if(!list.length)return;
+    haptic(10);
+    smoothSwitch(()=>{queue=list;curIdx=0;load(list[0],true,0)});
+    toast('Playing '+aName);
+  }));
 }
 function sheetHead(title,text){return'<div class="sheetHead"><h2 id="sheetTitle">'+esc(title)+'</h2>'+(text?'<p>'+esc(text)+'</p>':'')+'</div>'}
 function trackHead(s){const a=displayArtist(s.artist);return'<div class="sheetTrack">'+art(s,'')+'<div><strong>'+esc(s.title)+'</strong>'+(a?'<span>'+esc(a)+'</span>':'')+'</div></div>'}
@@ -3707,18 +3766,18 @@ function renderSheet(){
       ['rhythm','7-Day Listening Rhythm'],
       ['top','Top Tracks Leaderboard'],
       ['dna','Listening DNA Breakdown'],
-      ['badges','Milestones & Badges'],
+      ['sound','Sound Signature & EQ Curve'],
       ['gems','Forgotten Gems Rediscovery']
     ];
-    out.innerHTML=sheetHead('Personalize Your Replay','Make your statistics page truly yours.')+
+    out.innerHTML=sheetHead('Personalize Statistics','Tailor your listening statistics page.')+
       '<label class="drawCaption" for="spNameInput">Your Display Name</label>'+
       '<input class="field" id="spNameInput" maxlength="28" autocomplete="off" placeholder="e.g. Argon" value="'+esc(prof.name||'')+'">'+
-      '<span class="drawCaption">Replay Color Aura</span>'+
+      '<span class="drawCaption">Color Aura</span>'+
       '<div class="auraRow">'+auras.map(a=>'<button class="auraBtn '+(prof.aura===a[0]?'active':'')+'" type="button" data-aura-pick="'+a[0]+'"><span class="auraSwatch" style="background:'+a[2]+'"></span>'+a[1]+'</button>').join('')+'</div>'+
       '<span class="drawCaption">Daily Listening Goal</span>'+
       '<div class="eqPresets">'+goals.map(g=>'<button class="eqChip '+(prof.goalMin===g?'active':'')+'" type="button" data-goal-pick="'+g+'">'+g+' min</button>').join('')+'</div>'+
       '<span class="drawCaption">Visible Sections</span>'+
-      toggles.map(t=>'<label class="choice"><input type="checkbox" data-wid-toggle="'+t[0]+'" '+(w[t[0]]?'checked':'')+'><span>'+t[1]+'</span></label>').join('')+
+      toggles.map(t=>'<label class="choice"><input type="checkbox" data-wid-toggle="'+t[0]+'" '+(w[t[0]]!==false?'checked':'')+'><span>'+t[1]+'</span></label>').join('')+
       '<button class="primary wide" id="spSaveCustom" type="button">Done</button>';
     $('spNameInput').addEventListener('input',e=>{prof.name=e.target.value;savePrefs();renderStatsPage()});
     out.querySelectorAll('[data-aura-pick]').forEach(b=>b.addEventListener('click',()=>{haptic(8);prof.aura=b.dataset.auraPick;savePrefs();renderStatsPage();renderSheet()}));
@@ -4069,7 +4128,7 @@ document.addEventListener('keydown',e=>{
 window.addEventListener('pagehide',()=>{flushListenTime();persist()});
 if(matchMedia){const m=matchMedia('(prefers-color-scheme: dark)'),f=()=>prefs.theme==='system'&&applyTheme();m.addEventListener?m.addEventListener('change',f):m.addListener(f)}
 if('mediaSession'in navigator){const action=(n,f)=>{try{navigator.mediaSession.setActionHandler(n,f)}catch(e){}};action('play',safePlay);action('pause',smoothPause);action('previoustrack',previous);action('nexttrack',next);action('seekto',d=>{if(d.seekTime!=null&&audio.duration)audio.currentTime=d.seekTime});action('seekbackward',d=>audio.currentTime=Math.max(0,audio.currentTime-(d.seekOffset||10)));action('seekforward',d=>{if(audio.duration)audio.currentTime=Math.min(audio.duration,audio.currentTime+(d.seekOffset||10))})}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker'in navigator&&/^https?:$/.test(location.protocol))window.addEventListener('load',()=>{try{navigator.serviceWorker.register('./sw.js').catch(()=>{})}catch(e){}});
 
 (async()=>{try{
   applyTheme();
@@ -4084,7 +4143,7 @@ if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serv
   for(const s of songs){const m=meta(s.fileName);if(m.title!==s.title||m.artist!==s.artist){s.title=m.title;s.artist=m.artist;await put('songs',s).catch(()=>{})}}
   renderAll();
   restore();
-}catch(e){console.error('Lyra could not open its local library.',e);toast('Lyra could not open your local music library.')}})();
+}catch(e){renderAll();toast('Running in temporary session mode.')}})();
 </script>
 <script>
 document.querySelector('#repeatBtn svg').setAttribute('viewBox','0 0 24 24');
