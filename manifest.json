@@ -1,4 +1,5 @@
 {
+  "id": "./",
   "name": "Lyra",
   "short_name": "Lyra",
   "description": "A frost-glass iPhone-style offline music player with 5-band EQ, live visualizer, sleep timer, playlists, and listening statistics.",

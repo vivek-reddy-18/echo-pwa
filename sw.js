@@ -1,5 +1,18 @@
-const CACHE = 'lyra-shell-v9';
+const CACHE = 'lyra-shell-v10';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+
+function isStaticShellAsset(url) {
+  const scopePath = new URL(self.registration.scope).pathname;
+  const rel = url.pathname.startsWith(scopePath) ? './' + url.pathname.slice(scopePath.length) : url.pathname;
+  return ASSETS.includes(rel);
+}
+
+async function safeCachePut(request, response) {
+  try {
+    const cache = await caches.open(CACHE);
+    await cache.put(request, response);
+  } catch (e) {}
+}
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
@@ -23,11 +36,8 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate') {
     event.respondWith(
       fetch(request)
-        .then(async response => {
-          if (response.ok) {
-            const cache = await caches.open(CACHE);
-            await cache.put(request, response.clone());
-          }
+        .then(response => {
+          if (response.ok) event.waitUntil(safeCachePut(request, response.clone()));
           return response;
         })
         .catch(async () => {
@@ -38,13 +48,12 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  if (!isStaticShellAsset(url)) return;
+
   event.respondWith(
     caches.match(request).then(cached => {
-      const fresh = fetch(request).then(async response => {
-        if (response.ok) {
-          const cache = await caches.open(CACHE);
-          await cache.put(request, response.clone());
-        }
+      const fresh = fetch(request).then(response => {
+        if (response.ok) event.waitUntil(safeCachePut(request, response.clone()));
         return response;
       }).catch(() => cached || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } }));
       if (cached) {
