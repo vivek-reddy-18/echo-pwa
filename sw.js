@@ -1,4 +1,4 @@
-const CACHE = 'lyra-shell-v6';
+const CACHE = 'lyra-shell-v7';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', event => {
